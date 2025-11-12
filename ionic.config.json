@@ -1,0 +1,7 @@
+{
+  "name": "burger-king",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
