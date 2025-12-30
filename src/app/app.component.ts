@@ -1,5 +1,5 @@
 import { GetLanguageCodeResult, Device } from '@capacitor/device';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { Network } from '@capacitor/network';
 import { Router } from '@angular/router';
 import config from 'capacitor.config';
+import { UserOrderrService } from './service/user-order.service';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class AppComponent implements OnInit {
   private router: Router = inject(Router)
   private platform = inject(Platform);
   private tranlateService = inject(TranslateService);
+  private userORdenServie: UserOrderrService = inject(UserOrderrService)
+  public loadSignal: WritableSignal<boolean> = signal(false)
+
   constructor() {}
   ngOnInit(): void {
     this.platform.ready().then(async () => {
@@ -33,8 +37,12 @@ export class AppComponent implements OnInit {
       if (language.value) {
         this.tranlateService.use(language.value);
       }
+     
       this.checkNetwork()
+      await this.userORdenServie.initOrder()
       config.plugins!.CapacitorHttp!.enabled = true
+
+      this.loadSignal.set(true)
     });
   }
 

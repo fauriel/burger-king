@@ -1,0 +1,53 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-label>{{'label.total.order' | translate }}
+        {{totalOrderSignal()}}$
+        @if(showButtonPay){
+          <ion-button slot="end" (click)="clickPay()">
+            {{'label.pay.order' | translate}}
+          </ion-button>
+        }
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        @for(quantityProduct of productsSignal(); track quantityProduct){
+          <ion-item>
+            <ion-label class="ion-texr-wrap">{{quantityProduct.product.name | translate}}</ion-label>
+          </ion-item>
+          @if (quantityProduct.product.extras) {
+            <ion-item>
+              <ul>
+                @for(optionSelected of quantityProduct.product.extras | extrasPipe; track optionSelected) {
+                  <li>{{ optionSelected}}</li>
+                }
+              </ul>
+            </ion-item>
+          }
+          <ion-card>
+            <ion-card-content>
+              <ion-item>
+                <ion-label>{{'label.quantity' | translate}}</ion-label>
+                <ion-icon class="icon" name="remove-circle-outline" (click)="oneLessProduct(quantityProduct)"/>
+                <ion-text color="ion-padding">
+                  {{quantityProduct.quantity}}
+                </ion-text>
+                <ion-icon class="icon" name="add-circle-outline" (click)="oneMoreProduct(quantityProduct)"/>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  {{'label.total' | translate}} {{quantityProduct.product | calculateTotalPrice: quantityProduct.quantity }}
+                  
+              </ion-label></ion-item>
+            </ion-card-content>
+          </ion-card>
+        }
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>

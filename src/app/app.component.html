@@ -1,5 +1,9 @@
-<ion-app>
-  <app-toolbar></app-toolbar>
-  <ion-router-outlet id="content"></ion-router-outlet>
-  <app-footer></app-footer>
-</ion-app>
+@if (loadSignal()) {
+  <ion-app>
+    <app-toolbar></app-toolbar>
+    <ion-router-outlet id="content"></ion-router-outlet>
+    <app-footer></app-footer>
+  </ion-app>
+}
+
+

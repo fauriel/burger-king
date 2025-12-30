@@ -43,6 +43,7 @@ import { IProductoExtraOptions } from 'src/app/models/product-extra-options.mode
 import { RadioGroupCustomEvent } from '@ionic/core';
 import { CalculateTotalPricePipe } from 'src/app/pipe/calculate-total-price.pipe';
 import { ToastService } from 'src/app/service/toast.service';
+import { UserOrderrService } from 'src/app/service/user-order.service';
 
 @Component({
   selector: 'app-product',
@@ -92,6 +93,7 @@ export class ProductPage {
   translateService: TranslateService = inject(TranslateService);
   public auitnitySignal: WritableSignal<number> = signal(1);
   private toastservice: ToastService = inject(ToastService);
+  private userOrderService: UserOrderrService = inject(UserOrderrService)
 
   ionViewWillEnter() {
     if (this.idProduct) {
@@ -131,6 +133,8 @@ export class ProductPage {
   }
 
   addProductOrder(product: IProduct) {
+    this.userOrderService.addproduct(product, this.auitnitySignal())
+
     this.toastservice.showToast(
       this.translateService.instant('label.product.add.success')
     );

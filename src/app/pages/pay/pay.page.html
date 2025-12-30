@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>pay</ion-title>
-  </ion-toolbar>
-</ion-header>
+
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">pay</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid>
+    @if(!userSignal()){
+      <ion-row>
+        <ion-col>
+          @if(showCreateAccount){
+            <app-create-account
+            (back)="seeLogin()"
+            [showButtonBack]="true"
+            ></app-create-account>
+          }
+          <app-login 
+          [showButtonBack]="true"
+          (newAccount)="newAccoutn()"
+          (back)="backHome()"
+          ></app-login>
+        </ion-col>
+      </ion-row>
+    }@else {
+      <ion-row>
+        <ion-col>
+         <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              {{'label.order' | translate}}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            @if(step == 1){
+              <ion-button (click)="nextStep()" >
+                {{'label.next' | translate}}
+              </ion-button>
+            }
+          </ion-card-content>
+         </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+         <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              {{'label.address' | translate}}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            @if(step == 2){
+              <ion-button (click)="previustStep()" >
+                {{'label.previous' | translate}}
+              </ion-button>
+              <ion-button (click)="nextStep()" >
+                {{'label.next' | translate}}
+              </ion-button>
+            }
+          </ion-card-content>
+         </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+         <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              {{'label.payment.gateway' | translate}}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            @if(step == 3){
+              <ion-button (click)="nextStep()" >
+                {{'label.next' | translate}}
+              </ion-button>
+            }
+          </ion-card-content>
+         </ion-card>
+        </ion-col>
+      </ion-row>
+    }
+    
+  </ion-grid>
 </ion-content>
